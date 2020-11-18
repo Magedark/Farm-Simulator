@@ -5,5 +5,4 @@ function createCharacter(tble)
 	character.width = 70
 	character.height = 90
 	character.speed = 100
-	table.insert(tble, character)
 end
