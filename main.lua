@@ -31,7 +31,6 @@ function love.draw()
 	love.graphics.rectangle(mode, character.x, character.y, character.width, character.height)
 
 	for i,v in ipairs(listOfRectangles) do
-		print("Drawing " .. i)
 		if checkCollision(character, v) then
 			mode = "fill"
 		else
@@ -41,18 +40,7 @@ function love.draw()
 	end
 end
 
-function checkCharacterCollisions()
-	for i,v in ipairs(listOfRectangles) do
-		if checkCollision(character, v) then
-			print(i .. " is colliding")
-			return true
-		else
-			print(i .. " not colliding!")
 
-			return false
-		end
-	end
-end
 
 function characterMovement(dt)
 	if love.keyboard.isDown("right") and character.x < love.graphics.getWidth() - character.width then
@@ -90,7 +78,16 @@ function characterMovement(dt)
 	end
 end
 
-
+function love.keypressed(key)
+	if key == 'space' then
+		for i,v in ipairs(listOfRectangles) do
+			if checkIfNextTo(character, v) then
+				print("Hi, I am rectangle " .. i)
+				return
+			end
+		end
+	end
+end
 
 
 function checkCollision(a, b)
@@ -113,5 +110,28 @@ function checkCollision(a, b)
 		return false
 	end
 end
+
+-- Function to see if character is next to a specific object
+function checkIfNextTo(a, b)
+	local a_left = a.x
+	local a_right = a.x + a.width
+	local a_top = a.y
+	local a_bottom = a.y + a.height
+
+	local b_left = b.x
+	local b_right = b.x + b.width
+	local b_top = b.y
+	local b_bottom = b.y + b.height
+
+	if (a_right <= b_left and a_right >= b_left - 10) or
+	(a_left >= b_right and a_left <= b_right + 10) or
+	(a_bottom <= b_top and a_bottom >= b_top - 10) or
+	(a_top >= b_bottom and a_top <= b_bottom + 10) then
+		return true
+	else
+		return false
+	end
+end
+
 
 
