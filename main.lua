@@ -1,14 +1,23 @@
 io.stdout:setvbuf("no")
 require("character")
 require("npcs")
+require("textbox")
 
 function love.load()
 	listOfRectangles = {}
-	for i=1, 3 do
-		createNPC(listOfRectangles)
-
-	end
 	createCharacter()
+	i = 1
+	while i < 4 
+		do
+		newNPC = createNPC()
+		if not checkCollision(character, newNPC) then
+			table.insert(listOfRectangles, newNPC)
+			i = i + 1
+		else 
+			print("Generated NPC collides with player!")
+		end
+	end
+	createTextbox()
 end
 
 
@@ -26,6 +35,24 @@ function love.update(dt)
 end
 
 function love.draw()
+	drawCharactersAndNPCs()
+
+	if (textbox.active) then
+		love.graphics.setColor(textbox.colors.background)
+	    love.graphics.rectangle('fill',
+	        textbox.x, textbox.y,
+	        textbox.width, textbox.height)
+
+	    love.graphics.setColor(textbox.colors.text)
+	    love.graphics.printf("test",
+	        textbox.x, textbox.y,
+	        textbox.width, 'left')
+	end
+end
+
+function drawCharactersAndNPCs()
+	love.graphics.setColor(128,128,128)
+
 	local mode
 	mode = "line"
 	love.graphics.rectangle(mode, character.x, character.y, character.width, character.height)
@@ -38,9 +65,8 @@ function love.draw()
 		end
 		love.graphics.rectangle(mode, v.x, v.y, v.width, v.height)
 	end
+
 end
-
-
 
 function characterMovement(dt)
 	if love.keyboard.isDown("right") and character.x < love.graphics.getWidth() - character.width then
@@ -86,6 +112,9 @@ function love.keypressed(key)
 				return
 			end
 		end
+	end
+	if key == 'v' then
+		textbox.active = not textbox.active
 	end
 end
 
