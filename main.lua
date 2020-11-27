@@ -26,8 +26,11 @@ end
 -- If movement would collide, bring them back to old position?
 
 function love.update(dt)
+ 
+ 	if not textbox.active then
+		characterMovement(dt)
+ 	end
 
-	characterMovement(dt)
 
 	if love.keyboard.isDown("escape") then
 		love.event.quit()
@@ -44,7 +47,7 @@ function love.draw()
 	        textbox.width, textbox.height)
 
 	    love.graphics.setColor(textbox.colors.text)
-	    love.graphics.printf("test",
+	    love.graphics.printf(textbox.text,
 	        textbox.x, textbox.y,
 	        textbox.width, 'left')
 	end
@@ -108,6 +111,8 @@ function love.keypressed(key)
 	if key == 'space' then
 		for i,v in ipairs(listOfRectangles) do
 			if checkIfNextTo(character, v) then
+				textbox.active = not textbox.active
+				textbox.text = "Hi, I am rectangle " .. i
 				print("Hi, I am rectangle " .. i)
 				return
 			end

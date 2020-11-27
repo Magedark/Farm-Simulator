@@ -2,15 +2,15 @@
 
 function createTextbox()
 	textbox = {
-    x = 40,
-    y = 40,
-    width = 400,
-    height = 200,
+    x = 5,
+    y = love.graphics.getHeight() - 105,
+    width = love.graphics.getWidth() - 10,
+    height = 100,
     text = 'hello',
     active = false,
     colors = {
-        background = { 255, 255, 255, 255 },
-        text = { 1, 1, 1, 255 }
+        background = { 128, 128, 128, 255 },
+        text = { 0, 0, 0, 255 }
    		}
 	}
 end
