@@ -1,0 +1,14 @@
+{
+	"characters": [
+		{
+			"name": "Miya",
+			"birthday": "Fall 7",
+			"age": "28",
+			"relationship": 0,
+			"loves": [],
+			"likes": [],
+			"dislikes":[],
+			"hates": [],
+		}
+	]
+}

@@ -14,3 +14,18 @@ function createTextbox()
    		}
 	}
 end
+
+function createNameBox()
+    namebox = {
+    x = love.graphics.getWidth() - 80,
+    y = love.graphics.getHeight() - 155,
+    width = 75,
+    height = 55,
+    text = 'hello',
+    active = false,
+    colors = {
+        background = { 128, 128, 128, 255 },
+        text = { 0, 0, 0, 255 }
+        }
+    }
+end

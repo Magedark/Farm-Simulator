@@ -11,13 +11,24 @@ function love.load()
 		do
 		newNPC = createNPC()
 		if not checkCollision(character, newNPC) then
-			table.insert(listOfRectangles, newNPC)
+			if table.getn(listOfRectangles) > 1 then
+				for x,y in ipairs(listOfRectangles) do
+					if not checkCollision(newNPC, y) then
+						table.insert(listOfRectangles, newNPC)
+					end
+				end
+			else
+				table.insert(listOfRectangles, newNPC)
+
+			end
+
 			i = i + 1
 		else 
 			print("Generated NPC collides with player!")
 		end
 	end
 	createTextbox()
+	createNameBox()
 end
 
 
@@ -50,6 +61,17 @@ function love.draw()
 	    love.graphics.printf(textbox.text,
 	        textbox.x, textbox.y,
 	        textbox.width, 'left')
+
+	    love.graphics.setColor(namebox.colors.background)
+	    love.graphics.rectangle('fill',
+	        namebox.x, namebox.y,
+	        namebox.width, namebox.height)
+
+	    love.graphics.setColor(namebox.colors.text)
+	    love.graphics.printf(namebox.text,
+	        namebox.x, namebox.y,
+	        namebox.width, 'left')
+
 	end
 end
 
@@ -113,6 +135,8 @@ function love.keypressed(key)
 			if checkIfNextTo(character, v) then
 				textbox.active = not textbox.active
 				textbox.text = "Hi, I am rectangle " .. i
+				namebox.active = not namebox.active
+				namebox.text = "Rectangle" .. i
 				print("Hi, I am rectangle " .. i)
 				return
 			end
